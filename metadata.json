@@ -1,0 +1,8 @@
+{
+  "name": "Barking Puppy ($BARK)",
+  "description": "The loudests, funniest, and most energetic meme coin on the blockchain. Join the Barking Puppy revolution!",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
