@@ -10,7 +10,6 @@ import {
   Rocket,
   Menu,
   X,
-  Volume2,
   ExternalLink
 } from 'lucide-react';
 import { TokenomicItem, RoadmapStep } from './types';
@@ -21,17 +20,29 @@ const TOKENOMICS: TokenomicItem[] = [
 ];
 
 const ROADMAP: RoadmapStep[] = [
-  { phase: 'Phase 1', title: 'The Whelp', description: 'Fair launch, first community wave, and early holders.', status: 'completed' },
-  { phase: 'Phase 2', title: 'The Zoomies', description: 'Listings, creator collabs, and the Big Bark campaign.', status: 'in-progress' },
-  { phase: 'Phase 3', title: 'The Big Bark', description: 'More reach, more lore, and pack partnerships.', status: 'future' },
-  { phase: 'Phase 4', title: 'Alpha Dog', description: 'Events, merch drops, and community-led activations.', status: 'future' },
+  { phase: 'Signal 01', title: 'On-Chain First', description: 'Community points to $BP mint timing before the X account appeared.', status: 'completed' },
+  { phase: 'Signal 02', title: 'Pattern Echoes', description: 'Supporters highlight shared visuals, prompts, and themes across posts.', status: 'future' },
+  { phase: 'Signal 03', title: 'Wallet Actions', description: 'Community notes burns and repeated small buybacks routed to burns.', status: 'future' },
+  { phase: 'Signal 04', title: 'No Confirmation', description: 'No official confirmation or identity reveal has been published.', status: 'future' },
 ];
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 });
 
-  const playBark = () => {
-    console.log('BARK! BARK!');
+  const handleEyeMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relX = (event.clientX - rect.left) / rect.width - 0.5;
+    const relY = (event.clientY - rect.top) / rect.height - 0.5;
+    const maxOffset = 12;
+    setPupilOffset({
+      x: Math.max(Math.min(relX * maxOffset * 2, maxOffset), -maxOffset),
+      y: Math.max(Math.min(relY * maxOffset * 2, maxOffset), -maxOffset),
+    });
+  };
+
+  const resetEyes = () => {
+    setPupilOffset({ x: 0, y: 0 });
   };
 
   return (
@@ -82,7 +93,7 @@ const App: React.FC = () => {
         className="relative pt-32 pb-20 px-4 overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url('/her.png')" }}
       >
-        <div className="absolute inset-0 bg-black/80"></div>
+        <div className="absolute inset-0 bg-black/90"></div>
         <div className="relative mx-auto max-w-6xl">
           <div className="flex flex-col items-center text-center">
             <div className="floating mb-8 relative fade-up">
@@ -91,9 +102,6 @@ const App: React.FC = () => {
                 alt="Barking Puppy Mascot"
                 className="h-40 w-40 md:h-52 md:w-52 object-contain -rotate-6 hover-lift"
               />
-              <div className="absolute -bottom-4 -right-4 rounded-full bg-red-600 p-4 shadow-lg bark-button cursor-pointer" onClick={playBark}>
-                <Volume2 size={26} />
-              </div>
             </div>
 
             <h1 className="text-5xl md:text-8xl font-bold wordmark tracking-[0.04em] leading-none text-white drop-shadow-[0_6px_24px_rgba(0,0,0,0.85)] fade-up delay-1">
@@ -174,46 +182,114 @@ const App: React.FC = () => {
       </section>
 
       {/* About */}
-      <section id="about" className="relative py-24 border-y border-white/10 bg-white/5">
+      <section id="about" className="relative py-24 border-y border-white/10 bg-white/5 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="flyer slow" style={{ top: '6%', left: '-28%' }}>
+            <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '12%', left: '-36%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '18%', left: '-24%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-3" style={{ top: '24%', left: '-32%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-1" style={{ top: '30%', left: '-26%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-2" style={{ top: '36%', left: '-38%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-3" style={{ top: '42%', left: '-30%' }}>
+            <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '48%', left: '-34%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '54%', left: '-26%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-3" style={{ top: '60%', left: '-40%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-1" style={{ top: '66%', left: '-28%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-2" style={{ top: '72%', left: '-36%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-3" style={{ top: '78%', left: '-30%' }}>
+            <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '84%', left: '-34%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '90%', left: '-38%' }}>
+            <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center relative">
           <div>
             <h2 className="text-4xl md:text-6xl font-bold wordmark uppercase tracking-tight">
               The <span className="text-red-600">Bark</span> Story
             </h2>
             <div className="mt-6 space-y-6 text-lg text-gray-300">
-              <p>Every dog has its day, but Barking Puppy has its own decade. Born from meme energy and a relentless community, $BP is more than a coin; it is a movement.</p>
-              <p>We are here to keep the bark loud, the design sharp, and the pack growing.</p>
+              <p>Barking Puppy is driven by a community narrative that connects timing, visuals, and on-chain behavior. Supporters argue the signals align with a familiar figure, but no official confirmation exists.</p>
+              <p>The focus stays on observation over claims: timestamps, posts, and on-chain actions that people can check for themselves.</p>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-black/70 p-4 hover-lift">
-                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">WSB Vibe</p>
-                  <p className="mt-2 text-sm text-gray-300">High conviction, high culture. Keep the bark loud.</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">Timeline Signals</p>
+                  <p className="mt-2 text-sm text-gray-300">Community highlights mint timing vs. account creation as a key clue.</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-black/70 p-4 hover-lift">
-                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">Stonks Energy</p>
-                  <p className="mt-2 text-sm text-gray-300">Bullish visuals with a GameStop color core.</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">Visual Echoes</p>
+                  <p className="mt-2 text-sm text-gray-300">Supporters point to matching themes: dog, popcorn, movies, trading, and isolation.</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-6 mt-10">
                 <div className="p-6 bg-black rounded-2xl border border-white/10 hover-lift">
                   <TrendingUp className="text-red-600 mb-4" size={32} />
-                  <h3 className="text-xl font-bold mb-2">High Hype</h3>
-                  <p className="text-sm text-gray-400">Zero tolerance for boring vibes. The bark stays constant.</p>
+                  <h3 className="text-xl font-bold mb-2">On-Chain Actions</h3>
+                  <p className="text-sm text-gray-400">Community notes burns and repeat buybacks routed to burns.</p>
                 </div>
                 <div className="p-6 bg-black rounded-2xl border border-white/10 hover-lift">
                   <ShieldCheck className="text-red-600 mb-4" size={32} />
-                  <h3 className="text-xl font-bold mb-2">Safe Paws</h3>
-                  <p className="text-sm text-gray-400">LP burned, ownership renounced. Built to last.</p>
+                  <h3 className="text-xl font-bold mb-2">No Confirmation</h3>
+                  <p className="text-sm text-gray-400">No official affiliation or identity reveal has been published.</p>
                 </div>
               </div>
             </div>
           </div>
           <div className="relative">
             <div className="absolute inset-0 rounded-[40px] bg-red-600/20 blur-2xl -z-10"></div>
-            <img
-              src="/mask.png"
-              className="rounded-[40px] shadow-2xl"
-              alt="Puppy about"
-            />
+            <div className="relative mx-auto w-full max-w-md">
+              <div
+                className="absolute inset-[-50%] z-20"
+                onMouseMove={handleEyeMove}
+                onMouseLeave={resetEyes}
+              />
+              <div className="absolute inset-0 z-0">
+                <div className="eye-socket" style={{ left: '31%', top: '40%' }}>
+                  <span
+                    className="eye-pupil"
+                    style={{ transform: `translate(calc(-50% + ${pupilOffset.x}px), calc(-50% + ${pupilOffset.y}px))` }}
+                  />
+                </div>
+                <div className="eye-socket" style={{ left: '58%', top: '40%' }}>
+                  <span
+                    className="eye-pupil"
+                    style={{ transform: `translate(calc(-50% + ${pupilOffset.x}px), calc(-50% + ${pupilOffset.y}px))` }}
+                  />
+                </div>
+              </div>
+              <img
+                src="/mask.png"
+                className="relative z-10 rounded-[40px] shadow-2xl"
+                alt="Puppy about"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -293,35 +369,50 @@ const App: React.FC = () => {
       {/* Roadmap */}
       <section id="roadmap" className="relative py-24 bg-white/5 overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
-          <div className="flyer slow" style={{ top: '14%', left: '-32%' }}>
+          <div className="flyer slow" style={{ top: '8%', left: '-30%' }}>
             <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
           </div>
-          <div className="flyer fast delay-1" style={{ top: '22%', left: '-40%' }}>
+          <div className="flyer fast delay-1" style={{ top: '14%', left: '-38%' }}>
             <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
           </div>
-          <div className="flyer slow delay-2" style={{ top: '30%', left: '-28%' }}>
+          <div className="flyer slow delay-2" style={{ top: '20%', left: '-26%' }}>
             <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
           </div>
-          <div className="flyer fast delay-3" style={{ top: '38%', left: '-36%' }}>
+          <div className="flyer fast delay-3" style={{ top: '26%', left: '-34%' }}>
             <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
           </div>
-          <div className="flyer slow delay-1" style={{ top: '46%', left: '-30%' }}>
+          <div className="flyer slow delay-1" style={{ top: '32%', left: '-28%' }}>
             <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
           </div>
-          <div className="flyer fast delay-2" style={{ top: '54%', left: '-42%' }}>
+          <div className="flyer fast delay-2" style={{ top: '38%', left: '-40%' }}>
             <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
           </div>
-          <div className="flyer slow delay-3" style={{ top: '62%', left: '-34%' }}>
+          <div className="flyer slow delay-3" style={{ top: '44%', left: '-32%' }}>
             <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
           </div>
-          <div className="flyer fast delay-1" style={{ top: '70%', left: '-38%' }}>
+          <div className="flyer fast delay-1" style={{ top: '50%', left: '-36%' }}>
             <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
           </div>
-          <div className="flyer slow delay-2" style={{ top: '78%', left: '-30%' }}>
+          <div className="flyer slow delay-2" style={{ top: '56%', left: '-28%' }}>
             <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
           </div>
-          <div className="flyer fast" style={{ top: '86%', left: '-44%' }}>
+          <div className="flyer fast delay-3" style={{ top: '62%', left: '-42%' }}>
             <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-1" style={{ top: '68%', left: '-30%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-2" style={{ top: '74%', left: '-38%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-3" style={{ top: '80%', left: '-34%' }}>
+            <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '86%', left: '-40%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '92%', left: '-36%' }}>
+            <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4">
@@ -359,9 +450,9 @@ const App: React.FC = () => {
           <h2 className="text-4xl md:text-6xl font-bold uppercase text-center mb-16 wordmark">How to Adopt $BP</h2>
           <div className="grid md:grid-cols-3 gap-12">
             {[
-              { icon: <ShieldCheck size={48} />, title: 'Create a Wallet', text: 'Download Phantom or your wallet of choice from the app store for free.' },
-              { icon: <TrendingUp size={48} />, title: 'Get Some SOL', text: 'Have SOL in your wallet to swap for $BP. If you do not have SOL, buy on an exchange.' },
-              { icon: <Dog size={48} />, title: 'Go to Raydium', text: 'Connect to Raydium, paste the $BP address, and confirm.' }
+              { icon: <ShieldCheck size={48} />, title: 'Visit pump.fun', text: 'Open the $BP page on pump.fun and review the details.' },
+              { icon: <TrendingUp size={48} />, title: 'Check the Chart', text: 'Use DexScreener to track volume, price, and activity.' },
+              { icon: <Dog size={48} />, title: 'Trade on Jupiter', text: 'Use Jupiter to swap with the $BP contract address.' }
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center text-center">
                 <div className="mb-6 text-red-600">{item.icon}</div>
@@ -385,7 +476,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="flex gap-8">
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://x.com/BPuppy80020" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
               <Twitter size={32} />
             </a>
             <a href="https://t.me" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
@@ -397,8 +488,8 @@ const App: React.FC = () => {
           </div>
 
           <div className="text-center md:text-right">
-            <p className="text-gray-500 text-sm">© 2024 Barking Puppy. Built for the good boys.</p>
-            <p className="text-gray-700 text-[10px] mt-2 max-w-xs">Disclaimer: $BP is a meme coin with no intrinsic value. It is for entertainment and barking purposes only.</p>
+            <p className="text-gray-500 text-sm">© 2026 Barking Puppy. Built for the good boys.</p>
+            <p className="text-gray-700 text-[10px] mt-2 max-w-xs">NFA. Meme coin. Do your own research.</p>
           </div>
         </div>
       </footer>
