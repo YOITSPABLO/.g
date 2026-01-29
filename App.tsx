@@ -10,7 +10,8 @@ import {
   Rocket,
   Menu,
   X,
-  ExternalLink
+  ExternalLink,
+  BadgeCheck
 } from 'lucide-react';
 import { TokenomicItem, RoadmapStep } from './types';
 
@@ -161,7 +162,7 @@ const App: React.FC = () => {
             <a href="#roadmap" className="transition-colors hover:text-red-600">Roadmap</a>
             <a href="#howtobuy" className="transition-colors hover:text-red-600">How to Buy</a>
             <a href="https://x.com/i/communities/2015764395733708955" target="_blank" rel="noreferrer" className="rounded-full bg-red-600 px-6 py-2 text-black transition hover:bg-red-500">
-              <span className="flex items-center gap-2"><Send size={16} /> Join X</span>
+              <span className="flex items-center gap-2">Join X</span>
             </a>
           </div>
 
@@ -191,11 +192,16 @@ const App: React.FC = () => {
         <div className="absolute inset-0 bg-black/92 sm:bg-black/80 md:bg-black/70"></div>
         <div className="relative mx-auto max-w-6xl">
           <div className="flex flex-col items-center text-center">
-            <div className="floating mb-8 relative fade-up">
+            <div className="floating mb-8 relative fade-up group">
               <img
                 src="/laser-eyes%20(3).png"
                 alt="Barking Puppy Mascot"
                 className="h-40 w-40 md:h-52 md:w-52 object-contain -rotate-6 hover-lift"
+              />
+              <img
+                src="/bark.png"
+                alt="Bark"
+                className="pointer-events-none absolute left-[66%] top-[17%] h-14 w-auto md:h-20 object-contain opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:-translate-y-1 group-hover:translate-x-1"
               />
             </div>
 
@@ -359,17 +365,16 @@ const App: React.FC = () => {
           </div>
           <div className="relative">
             <div className="absolute inset-0 rounded-[40px] bg-red-600/20 blur-2xl -z-10"></div>
-            <div className="relative mx-auto w-full max-w-md">
-              <div
-                className="absolute inset-[-50%] z-20"
-                onMouseMove={handleEyeMove}
-                onMouseLeave={resetEyes}
-                onTouchStart={handleEyeMove}
-                onTouchMove={handleEyeMove}
-                onTouchEnd={resetEyes}
-                onPointerMove={handleEyeMove}
-                onPointerLeave={resetEyes}
-              />
+            <div
+              className="relative mx-auto w-full max-w-md"
+              onMouseMove={handleEyeMove}
+              onMouseLeave={resetEyes}
+              onTouchStart={handleEyeMove}
+              onTouchMove={handleEyeMove}
+              onTouchEnd={resetEyes}
+              onPointerMove={handleEyeMove}
+              onPointerLeave={resetEyes}
+            >
               <div className="absolute inset-0 z-0">
                 <div className="eye-socket" style={{ left: '31%', top: '40%' }}>
                   <span
@@ -389,6 +394,31 @@ const App: React.FC = () => {
                 className="relative z-10 rounded-[40px] shadow-2xl"
                 alt="Puppy about"
               />
+            </div>
+            <div className="mt-8 text-center">
+              <p className="text-xs uppercase tracking-[0.4em] text-gray-400">Officially listed on</p>
+              <div className="mt-4 flex flex-wrap justify-center gap-4">
+                <a
+                  href="https://www.lbank.com/trade/bp_usdt"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
+                >
+                  <img src="/lb.png" alt="LBank" className="h-9 w-9 object-contain" />
+                  LBank
+                  <ExternalLink size={16} className="opacity-70" />
+                </a>
+                <a
+                  href="https://www.mexc.com/en-GB/exchange/BP_USDT"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
+                >
+                  <img src="/mexc.png" alt="MEXC" className="h-6 w-6 object-contain" />
+                  MEXC
+                  <ExternalLink size={16} className="opacity-70" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
