@@ -418,6 +418,18 @@ const App: React.FC = () => {
                   MEXC
                   <ExternalLink size={16} className="opacity-70" />
                 </a>
+                <a
+                  href="https://www.bitmart.com/trade/BP_USDT?type=spot"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
+                >
+                  <span className="inline-flex items-center justify-center h-7 w-7 rounded bg-white">
+                    <img src="/bit.png" alt="BitMart" className="h-[60px] w-[60px] object-contain" />
+                  </span>
+                  BitMart
+                  <ExternalLink size={16} className="opacity-70" />
+                </a>
               </div>
             </div>
           </div>
