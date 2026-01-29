@@ -6,7 +6,7 @@ import {
   Send,
   TrendingUp,
   ShieldCheck,
-  Zap,
+  Flame,
   Rocket,
   Menu,
   X,
@@ -20,20 +20,87 @@ const TOKENOMICS: TokenomicItem[] = [
 ];
 
 const ROADMAP: RoadmapStep[] = [
-  { phase: 'Signal 01', title: 'On-Chain First', description: 'Community points to $BP mint timing before the X account appeared.', status: 'completed' },
-  { phase: 'Signal 02', title: 'Pattern Echoes', description: 'Supporters highlight shared visuals, prompts, and themes across posts.', status: 'future' },
-  { phase: 'Signal 03', title: 'Wallet Actions', description: 'Community notes burns and repeated small buybacks routed to burns.', status: 'future' },
-  { phase: 'Signal 04', title: 'No Confirmation', description: 'No official confirmation or identity reveal has been published.', status: 'future' },
+  {
+    phase: 'Signal 01',
+    title: 'The speculation',
+    description: 'Before we Barked, there was simply one dev alone eating popcorn, we did not know what he meant, Hours later @BPuppy80020 posted exactly that.',
+    status: 'completed',
+    imageSrc: '/com.png',
+    imageAlt: 'Community',
+    imageSrcSecondary: '/pop.png',
+    imageAltSecondary: 'Pop',
+    imageText: 'Could it be?'
+  },
+  {
+    phase: 'Signal 02',
+    title: 'The Conviction',
+    description: 'Through FUD, Pumps, Dumps, ATH whatever the price is, The dev buys and burns with over 4% of the supply already gone forever, its not about the money.',
+    status: 'future',
+    imageSrc: '/tx.png',
+    imageAlt: 'TX',
+    imageSrcSecondary: '/h.png',
+    imageAltSecondary: 'H',
+    imageText: (
+      <a
+        href="https://solscan.io/account/AfxRMLKoc3Y6rGwG7Ry6DspGag6g6w8g5qTKrPSVZ7i2?page=5&page_size=40#activities"
+        target="_blank"
+        rel="noreferrer"
+        className="text-red-500 hover:text-red-400 transition-colors"
+      >
+        Dev Buys
+      </a>
+    )
+  },
+  {
+    phase: 'Signal 03',
+    title: 'The Dev? ',
+    description: 'A community memeber lost his tokens, the dev in pumpfun chat sent him some (based) then @kevinlegend14 liked his comment thanking him for the $BP on instgram. Are you here Kev?',
+    status: 'future',
+    imageSrc: '/kk.png',
+    imageAlt: 'KK',
+    imageSrcSecondary: '/air.png',
+    imageAltSecondary: 'Air',
+    imageText: (
+      <>
+        Follow <a
+          href="https://www.instagram.com/kevinlegend14/tagged/?hl=en"
+          target="_blank"
+          rel="noreferrer"
+          className="text-red-500 hover:text-red-400 transition-colors"
+        >@kevinlegend14</a>
+      </>
+    )
+  },
+  {
+    phase: 'Signal 04',
+    title: 'The Confirmation',
+    description: 'Community made meme is posted, many hours later @BPuppy80020 posts the same meme aligning speculations.',
+    status: 'future',
+    imageSrc: '/lfg.png',
+    imageAlt: 'LFG',
+    imageSrcSecondary: '/proof.png .png',
+    imageAltSecondary: 'Proof',
+    imageText: 'The internet is not ready for $BP.'
+  },
 ];
 
 const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 });
+  const [hoverImage, setHoverImage] = useState<{ src: string; alt: string } | null>(null);
+  const CONTRACT_ADDRESS = '3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump';
 
-  const handleEyeMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleEyeMove = (
+    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>
+  ) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    const relX = (event.clientX - rect.left) / rect.width - 0.5;
-    const relY = (event.clientY - rect.top) / rect.height - 0.5;
+    const point = 'touches' in event && event.touches.length
+      ? event.touches[0]
+      : 'changedTouches' in event && event.changedTouches.length
+        ? event.changedTouches[0]
+        : event;
+    const relX = (point.clientX - rect.left) / rect.width - 0.5;
+    const relY = (point.clientY - rect.top) / rect.height - 0.5;
     const maxOffset = 12;
     setPupilOffset({
       x: Math.max(Math.min(relX * maxOffset * 2, maxOffset), -maxOffset),
@@ -45,8 +112,36 @@ const App: React.FC = () => {
     setPupilOffset({ x: 0, y: 0 });
   };
 
+  const openHoverImage = (src?: string, alt?: string) => {
+    if (!src) return;
+    setHoverImage({ src, alt: alt ?? '' });
+  };
+
+  const closeHoverImage = () => {
+    setHoverImage(null);
+  };
+
+  const copyContractAddress = () => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(CONTRACT_ADDRESS);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
+      {hoverImage && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-6"
+          onMouseLeave={closeHoverImage}
+          onClick={closeHoverImage}
+        >
+          <img
+            src={hoverImage.src}
+            alt={hoverImage.alt}
+            className="max-h-[80vh] max-w-[90vw] object-contain rounded-2xl shadow-2xl"
+          />
+        </div>
+      )}
       {/* Navigation */}
       <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-black/90 backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -93,7 +188,7 @@ const App: React.FC = () => {
         className="relative pt-32 pb-20 px-4 overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url('/her.png')" }}
       >
-        <div className="absolute inset-0 bg-black/90"></div>
+        <div className="absolute inset-0 bg-black/92 sm:bg-black/80 md:bg-black/70"></div>
         <div className="relative mx-auto max-w-6xl">
           <div className="flex flex-col items-center text-center">
             <div className="floating mb-8 relative fade-up">
@@ -150,9 +245,9 @@ const App: React.FC = () => {
 
             <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 w-full max-w-4xl fade-up delay-4">
               {[
-                { title: 'Diamond Paws', text: 'Hold the Bark. Stay with the pack.' },
-                { title: 'Stonks Mode', text: 'Charts up. Energy louder.' },
-                { title: 'Rocket Ready', text: 'We bark when the bell rings.' },
+                { title: 'Diamond Paws', text: 'Hodl, Bark break the internet.' },
+                { title: 'Stonks Mode', text: 'I LIKE THE COIN.' },
+                { title: 'BARK BARK', text: 'We bark when the bell rings.' },
               ].map((item) => (
                 <div key={item.title} className="rounded-2xl border border-white/10 bg-black/70 p-4 text-left shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover-lift">
                   <p className="text-xs uppercase tracking-[0.25em] text-red-500">{item.title}</p>
@@ -172,10 +267,10 @@ const App: React.FC = () => {
               <span className="text-red-500">WSB</span>
               <span>STONKS</span>
               <span>DIAMOND PAWS</span>
-              <span>HOLD THE BARK</span>
+              <span>HODL THE BP</span>
               <span className="text-red-500">$BP</span>
               <span>TO THE MOON</span>
-              <span>NOISE OVER FEAR</span>
+              <span>BARK BARK</span>
             </div>
           ))}
         </div>
@@ -236,28 +331,28 @@ const App: React.FC = () => {
               The <span className="text-red-600">Bark</span> Story
             </h2>
             <div className="mt-6 space-y-6 text-lg text-gray-300">
-              <p>Barking Puppy is driven by a community narrative that connects timing, visuals, and on-chain behavior. Supporters argue the signals align with a familiar figure, but no official confirmation exists.</p>
-              <p>The focus stays on observation over claims: timestamps, posts, and on-chain actions that people can check for themselves.</p>
+              <p>Barking Puppy is taking over from here. No one knows whats coming next, the thesis? GILLIONS. Our community embraces the return of roaring kitty.</p>
+              <p>The breadcrumbs left by @BPuppy80020 tell us we are in the right place, $BP is the next $GME. Just enter the rabbithole and you'll find our conviction.</p>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-black/70 p-4 hover-lift">
-                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">Timeline Signals</p>
-                  <p className="mt-2 text-sm text-gray-300">Community highlights mint timing vs. account creation as a key clue.</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">Pumpfun Deployment</p>
+                  <p className="mt-2 text-sm text-gray-300">$BP was minted on pump.fun and sat quietly for 9 days, no insiders, no artifical volume just waiting to be found.</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-black/70 p-4 hover-lift">
-                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">Visual Echoes</p>
-                  <p className="mt-2 text-sm text-gray-300">Supporters point to matching themes: dog, popcorn, movies, trading, and isolation.</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-red-500">@BPuppy80020</p>
+                  <p className="mt-2 text-sm text-gray-300">The account was made shortly after token deployment, leaving further clues to follow.</p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-6 mt-10">
                 <div className="p-6 bg-black rounded-2xl border border-white/10 hover-lift">
                   <TrendingUp className="text-red-600 mb-4" size={32} />
-                  <h3 className="text-xl font-bold mb-2">On-Chain Actions</h3>
-                  <p className="text-sm text-gray-400">Community notes burns and repeat buybacks routed to burns.</p>
+                  <h3 className="text-xl font-bold mb-2">The First Post</h3>
+                  <p className="text-sm text-gray-400">The first post from @BPuppy80020 egnited speculation around the $BP chart, and a cult quickly formed. </p>
                 </div>
                 <div className="p-6 bg-black rounded-2xl border border-white/10 hover-lift">
                   <ShieldCheck className="text-red-600 mb-4" size={32} />
-                  <h3 className="text-xl font-bold mb-2">No Confirmation</h3>
-                  <p className="text-sm text-gray-400">No official affiliation or identity reveal has been published.</p>
+                  <h3 className="text-xl font-bold mb-2">The Clues</h3>
+                  <p className="text-sm text-gray-400">In true Roaring Kitty style many clues are actively being left, $BP community has decoded the timeline. </p>
                 </div>
               </div>
             </div>
@@ -269,6 +364,11 @@ const App: React.FC = () => {
                 className="absolute inset-[-50%] z-20"
                 onMouseMove={handleEyeMove}
                 onMouseLeave={resetEyes}
+                onTouchStart={handleEyeMove}
+                onTouchMove={handleEyeMove}
+                onTouchEnd={resetEyes}
+                onPointerMove={handleEyeMove}
+                onPointerLeave={resetEyes}
               />
               <div className="absolute inset-0 z-0">
                 <div className="eye-socket" style={{ left: '31%', top: '40%' }}>
@@ -321,14 +421,14 @@ const App: React.FC = () => {
                     <img
                       src="/roaring.png"
                       alt="Roaring pup"
-                      className="pointer-events-none absolute left-6 top-1/2 -translate-y-1/2 w-40 sm:w-52 md:w-64 opacity-20"
+                      className="pointer-events-none absolute left-6 top-1/2 -translate-y-1/2 w-40 sm:w-52 md:w-64 opacity-20 hidden sm:block"
                     />
                   )}
                   {idx === 1 && (
                     <img
                       src="/kev.png"
                       alt="Kev"
-                      className="pointer-events-none absolute right-20 top-1/2 -translate-y-1/2 w-20 sm:w-28 md:w-36 opacity-20"
+                      className="pointer-events-none absolute right-20 top-1/2 -translate-y-1/2 w-20 sm:w-28 md:w-36 opacity-20 hidden sm:block"
                     />
                   )}
                   <div className="relative z-10 flex items-center gap-4">
@@ -352,13 +452,26 @@ const App: React.FC = () => {
                 </div>
               ))}
               <div className="relative z-10 p-8 bg-white text-black rounded-3xl mt-8 border border-black/20 shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_36px_rgba(255,255,255,0.22)] ring-2 ring-white/60">
-                <div className="flex justify-between items-end">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
                   <div>
                     <p className="uppercase font-bold text-xs mb-1 opacity-70">Total Supply</p>
-                    <h4 className="text-4xl font-bold">1,000,000,000</h4>
+                    <div className="relative inline-block">
+                      <h4 className="text-4xl font-bold">1,000,000,000</h4>
+                      <span className="pointer-events-none absolute left-[-6%] top-1/2 h-3 w-[112%] -translate-y-1/2 -rotate-6 rounded-full bg-gradient-to-r from-red-700 via-red-500 to-red-700 shadow-[0_4px_10px_rgba(220,38,38,0.45)]"></span>
+                      <span className="pointer-events-none absolute left-[-6%] top-1/2 h-3 w-[112%] -translate-y-1/2 -rotate-6 rounded-full border border-red-900/50"></span>
+                    </div>
                     <p className="text-lg font-bold mt-2">$BP Tokens</p>
+                    <p className="mt-3 text-sm font-semibold text-red-700">Supply is actively being burned from the devs&apos; buybacks.</p>
                   </div>
-                  <Zap size={64} className="opacity-30" />
+                  <a
+                    href="https://solscan.io/token/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-red-700 hover:text-red-800 transition-colors"
+                  >
+                    <Flame size={28} className="opacity-80" />
+                    Check total supply here
+                  </a>
                 </div>
               </div>
             </div>
@@ -417,8 +530,8 @@ const App: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark mb-4">The Puppy Path</h2>
-            <p className="text-xl text-gray-400">Built for momentum, driven by the pack.</p>
+            <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark mb-4">The Puppy Pack</h2>
+            <p className="text-xl text-gray-400">There will be signs.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -430,6 +543,31 @@ const App: React.FC = () => {
                 <p className="text-red-500 font-bold mb-2">{step.phase}</p>
                 <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
                 <p className="text-gray-400 flex-grow">{step.description}</p>
+                {step.imageSrc && (
+                  <div className="mt-6 flex flex-col items-center text-center">
+                    <div className="flex items-center justify-center gap-4">
+                      <img
+                        src={step.imageSrc}
+                        alt={step.imageAlt ?? ''}
+                        className="h-24 w-24 object-contain transition-transform duration-200 hover:scale-110 cursor-zoom-in"
+                        onMouseEnter={() => openHoverImage(step.imageSrc, step.imageAlt)}
+                        onClick={() => openHoverImage(step.imageSrc, step.imageAlt)}
+                      />
+                      {step.imageSrcSecondary && (
+                        <img
+                          src={step.imageSrcSecondary}
+                          alt={step.imageAltSecondary ?? ''}
+                          className="h-24 w-24 object-contain transition-transform duration-200 hover:scale-110 cursor-zoom-in"
+                          onMouseEnter={() => openHoverImage(step.imageSrcSecondary, step.imageAltSecondary)}
+                          onClick={() => openHoverImage(step.imageSrcSecondary, step.imageAltSecondary)}
+                        />
+                      )}
+                    </div>
+                    {step.imageText && (
+                      <p className="mt-3 text-sm text-gray-400">{step.imageText}</p>
+                    )}
+                  </div>
+                )}
                 {step.status === 'in-progress' && (
                   <div className="mt-6 flex items-center gap-2">
                     <div className="flex-grow h-2 bg-white/10 rounded-full overflow-hidden">
@@ -446,18 +584,56 @@ const App: React.FC = () => {
 
       {/* How To Buy */}
       <section id="howtobuy" className="py-24 bg-white text-black">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="relative max-w-7xl mx-auto px-4">
           <h2 className="text-4xl md:text-6xl font-bold uppercase text-center mb-16 wordmark">How to Adopt $BP</h2>
           <div className="grid md:grid-cols-3 gap-12">
             {[
-              { icon: <ShieldCheck size={48} />, title: 'Visit pump.fun', text: 'Open the $BP page on pump.fun and review the details.' },
-              { icon: <TrendingUp size={48} />, title: 'Check the Chart', text: 'Use DexScreener to track volume, price, and activity.' },
-              { icon: <Dog size={48} />, title: 'Trade on Jupiter', text: 'Use Jupiter to swap with the $BP contract address.' }
+              { icon: <ShieldCheck size={48} />, title: 'Visit pump.fun', text: 'Open the $BP page on pump.fun and review the details.', link: 'https://pump.fun/coin/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump' },
+              { icon: <TrendingUp size={48} />, title: 'INSTALL WALLET', text: 'Install a wallet for storing your tokens, such as phantom', link: 'https://phantom.com/download' },
+              { icon: <Dog size={48} />, title: 'Buy $BP', text: 'Buy $BP tokens on pump.fun, Jupiter, Phantom, MEXC, or your favorite DEX.', link: 'https://www.mexc.com/en-GB/exchange/BP_USDT' }
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center text-center">
                 <div className="mb-6 text-red-600">{item.icon}</div>
                 <h3 className="text-3xl font-bold mb-4 uppercase wordmark">{item.title}</h3>
-                <p className="text-lg font-medium opacity-80">{item.text}</p>
+                <p className="text-lg font-medium opacity-80">
+                  {item.title === 'Visit pump.fun' ? (
+                    <>
+                      Open the $BP page on pump.<a
+                        href={item.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-red-500 hover:text-red-400 transition-colors"
+                      >fun</a> and review the details.
+                    </>
+                  ) : item.title === 'INSTALL WALLET' ? (
+                    <>
+                      Install a wallet such as <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-red-500 hover:text-red-400 transition-colors"
+                      >phantom</a>, buy Solana and enter the{' '}
+                      <button
+                        type="button"
+                        onClick={copyContractAddress}
+                        className="text-red-500 hover:text-red-400 transition-colors underline underline-offset-4"
+                      >
+                        CA
+                      </button>.
+                    </>
+                  ) : (
+                    item.title === 'Buy $BP' ? (
+                      <>
+                        Buy $BP tokens on pump.fun, Jupiter, Phantom, <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-red-500 hover:text-red-400 transition-colors"
+                        >MEXC</a>, or your favorite DEX.
+                      </>
+                    ) : item.text
+                  )}
+                </p>
               </div>
             ))}
           </div>
@@ -466,8 +642,8 @@ const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="py-16 px-4 border-t border-white/10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-10">
+          <div className="flex items-center gap-2 md:w-1/3 md:justify-start">
             <img src="/laser-eyes%20(3).png" alt="Barking Puppy" className="h-10 w-10 object-contain -rotate-6" />
             <span className="text-3xl font-bold wordmark tracking-[0.04em]">
               <span className="text-white">Barking</span>
@@ -475,21 +651,31 @@ const App: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex gap-8">
+          <div className="flex flex-col items-center gap-4 md:w-1/3">
+            <div className="flex gap-8">
             <a href="https://x.com/BPuppy80020" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
               <Twitter size={32} />
             </a>
-            <a href="https://t.me" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://x.com/i/communities/2015764395733708955" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
               <MessageCircle size={32} />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-              <ExternalLink size={32} />
+            <a href="https://pump.fun/coin/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <TrendingUp size={32} />
             </a>
+            </div>
+            <div className="text-center">
+              <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Community made</p>
+              <p className="text-sm text-gray-400">
+                If you like the site, leave a tip
+                <span className="mx-2 text-gray-600">•</span>
+                <span className="font-mono text-xs text-gray-500 break-all">FY3vRfUKVecZ2XpJei5vAZ4nFMoiqzKU6gcTna6g2EWs</span>
+              </p>
+            </div>
           </div>
 
-          <div className="text-center md:text-right">
+          <div className="text-center md:text-right md:w-1/3 md:justify-end">
             <p className="text-gray-500 text-sm">© 2026 Barking Puppy. Built for the good boys.</p>
-            <p className="text-gray-700 text-[10px] mt-2 max-w-xs">NFA. Meme coin. Do your own research.</p>
+            <p className="text-gray-700 text-[10px] mt-2 max-w-xs">Built by the community, We are not responsible for financial losses, NFA. Memecoin. Do your own research.</p>
           </div>
         </div>
       </footer>

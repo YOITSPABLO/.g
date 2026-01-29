@@ -10,6 +10,11 @@ export interface RoadmapStep {
   description: string;
   status: 'completed' | 'in-progress' | 'future';
   phase: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageSrcSecondary?: string;
+  imageAltSecondary?: string;
+  imageText?: React.ReactNode;
 }
 
 export interface Message {
