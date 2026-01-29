@@ -90,6 +90,7 @@ const App: React.FC = () => {
   const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 });
   const [hoverImage, setHoverImage] = useState<{ src: string; alt: string } | null>(null);
   const CONTRACT_ADDRESS = '3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump';
+  const TIP_WALLET = 'FY3vRfUKVecZ2XpJei5vAZ4nFMoiqzKU6gcTna6g2EWs';
 
   const handleEyeMove = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>
@@ -125,6 +126,11 @@ const App: React.FC = () => {
   const copyContractAddress = () => {
     if (navigator?.clipboard?.writeText) {
       navigator.clipboard.writeText(CONTRACT_ADDRESS);
+    }
+  };
+  const copyTipWallet = () => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(TIP_WALLET);
     }
   };
 
@@ -707,11 +713,14 @@ const App: React.FC = () => {
             </div>
             <div className="text-center">
               <p className="text-xs uppercase tracking-[0.2em] text-gray-500">Community made</p>
-              <p className="text-sm text-gray-400">
+              <button
+                type="button"
+                onClick={copyTipWallet}
+                className="mt-2 text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors underline underline-offset-4"
+              >
                 If you like the site, leave a tip
-                <span className="mx-2 text-gray-600">•</span>
-                <span className="font-mono text-xs text-gray-500 break-all">FY3vRfUKVecZ2XpJei5vAZ4nFMoiqzKU6gcTna6g2EWs</span>
-              </p>
+              </button>
+              <p className="mt-2 font-mono text-xs text-gray-500 break-all">{TIP_WALLET}</p>
             </div>
           </div>
 
