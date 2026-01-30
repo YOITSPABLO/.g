@@ -345,7 +345,7 @@ const App: React.FC = () => {
             <div className="mt-6 space-y-6 text-lg text-gray-300">
               <p>Barking Puppy is taking over from here. No one knows whats coming next, the thesis? GILLIONS. Our community embraces the return of roaring kitty.</p>
               <p>The breadcrumbs left by @BPuppy80020 tell us we are in the right place, $BP is the next $GME. Just enter the rabbithole and you'll find our conviction.</p>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-black/70 p-4 hover-lift">
                   <p className="text-xs uppercase tracking-[0.3em] text-red-500">Pumpfun Deployment</p>
                   <p className="mt-2 text-sm text-gray-300">$BP was minted on pump.fun and sat quietly for 9 days, no insiders, no artifical volume just waiting to be found.</p>
@@ -355,7 +355,7 @@ const App: React.FC = () => {
                   <p className="mt-2 text-sm text-gray-300">The account was made shortly after token deployment, leaving further clues to follow.</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-6 mt-10">
+              <div className="grid grid-cols-1 gap-6 mt-10 sm:grid-cols-2">
                 <div className="p-6 bg-black rounded-2xl border border-white/10 hover-lift">
                   <TrendingUp className="text-red-600 mb-4" size={32} />
                   <h3 className="text-xl font-bold mb-2">The First Post</h3>
