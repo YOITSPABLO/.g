@@ -793,7 +793,7 @@ const App: React.FC = () => {
             <p className="mt-4 text-gray-400">Post a meme on X, tag $BP for a chance to feature your meme.</p>
           </div>
 
-          <div className="overflow-hidden rounded-[32px] border border-white/10 bg-black/60 px-4 py-6">
+          <div className="overflow-hidden rounded-[32px] border border-white/10 bg-black/60 px-4 py-6 w-full md:max-w-5xl mx-auto">
             <div className="ticker gap-6" style={{ animationDuration: '28s' }}>
               {[...MEMES, ...MEMES].map((item, idx) => (
                 <div
@@ -819,7 +819,7 @@ const App: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="mt-6 overflow-hidden rounded-[32px] border border-white/10 bg-black/60 px-4 py-6">
+          <div className="mt-6 overflow-hidden rounded-[32px] border border-white/10 bg-black/60 px-4 py-6 w-full md:max-w-5xl mx-auto">
             <div className="ticker gap-6" style={{ animationDuration: '28s', animationDirection: 'reverse' }}>
               {[...MEMES_2, ...MEMES_2].map((item, idx) => (
                 <div
