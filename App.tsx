@@ -171,17 +171,21 @@ const App: React.FC = () => {
 
   const copyMemeImage = async (src: string) => {
     try {
-      if (!window.isSecureContext || !navigator?.clipboard?.write) {
-        showCopied('Copy not supported');
+      const canCopyImage = window.isSecureContext && !!navigator?.clipboard?.write && 'ClipboardItem' in window;
+      if (!canCopyImage) {
+        showCopied('Press & hold to save, or right‑click to copy');
         return;
       }
       const url = new URL(src, window.location.origin).toString();
-      const res = await fetch(url);
+      const res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('Fetch failed');
       const blob = await res.blob();
-      await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+      const type = blob.type || 'image/png';
+      // eslint-disable-next-line no-undef
+      await navigator.clipboard.write([new ClipboardItem({ [type]: blob })]);
       showCopied('Meme copied');
     } catch {
-      showCopied('Copy failed');
+      showCopied('Press & hold to save, or right‑click to copy');
     }
   };
 
@@ -802,19 +806,15 @@ const App: React.FC = () => {
                 >
                   <img
                     src={item.src}
-                    alt={item.alt}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-50 pointer-events-none"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70"></div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                    <button
-                      type="button"
-                      onClick={() => copyMemeImage(item.src)}
-                      className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-colors"
-                    >
-                      Copy
-                    </button>
-                  </div>
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="relative h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70 pointer-events-none"></div>
                 </div>
               ))}
             </div>
@@ -828,19 +828,15 @@ const App: React.FC = () => {
                 >
                   <img
                     src={item.src}
-                    alt={item.alt}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+                    alt=""
+                    className="absolute inset-0 h-full w-full object-cover blur-xl scale-110 opacity-50 pointer-events-none"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70"></div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                    <button
-                      type="button"
-                      onClick={() => copyMemeImage(item.src)}
-                      className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-colors"
-                    >
-                      Copy
-                    </button>
-                  </div>
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="relative h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70 pointer-events-none"></div>
                 </div>
               ))}
             </div>
