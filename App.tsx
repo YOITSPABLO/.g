@@ -922,7 +922,7 @@ const App: React.FC = () => {
       {/* Footer */}
       <footer className="py-16 px-4 border-t border-white/10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-10">
-          <div className="flex items-center gap-2 md:w-1/3 md:justify-start">
+          <div className="flex flex-col items-center gap-2 md:w-1/3 md:justify-start md:flex-row">
             <img src="/laser-eyes%20(3).png" alt="Barking Puppy" className="h-10 w-10 object-contain -rotate-6" />
             <span className="text-3xl font-bold wordmark tracking-[0.04em]">
               <span className="text-white">Barking</span>
