@@ -403,39 +403,31 @@ const App: React.FC = () => {
             </div>
             <div className="mt-8 text-center">
               <p className="text-xs uppercase tracking-[0.4em] text-gray-400">Officially listed on</p>
-              <div className="mt-4 flex flex-wrap justify-center gap-4">
-                <a
-                  href="https://www.lbank.com/trade/bp_usdt"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
-                >
-                  <img src="/lb.png" alt="LBank" className="h-9 w-9 object-contain" />
-                  LBank
-                  <ExternalLink size={16} className="opacity-70" />
-                </a>
-                <a
-                  href="https://www.mexc.com/en-GB/exchange/BP_USDT"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
-                >
-                  <img src="/mexc.png" alt="MEXC" className="h-6 w-6 object-contain" />
-                  MEXC
-                  <ExternalLink size={16} className="opacity-70" />
-                </a>
-                <a
-                  href="https://www.bitmart.com/trade/BP_USDT?type=spot"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
-                >
-                  <span className="inline-flex items-center justify-center h-7 w-7 rounded bg-white">
-                    <img src="/bit.png" alt="BitMart" className="h-[60px] w-[60px] object-contain" />
-                  </span>
-                  BitMart
-                  <ExternalLink size={16} className="opacity-70" />
-                </a>
+              <div className="mt-4 overflow-hidden rounded-full border border-white/10 bg-black/60 px-4 py-3">
+                <div className="ticker gap-6">
+                  {[
+                    { name: 'LBank', href: 'https://www.lbank.com/trade/bp_usdt', logo: '/lb.png', size: 'h-7 w-7' },
+                    { name: 'MEXC', href: 'https://www.mexc.com/en-GB/exchange/BP_USDT', logo: '/mexc.png', size: 'h-6 w-6' },
+                    { name: 'BitMart', href: 'https://www.bitmart.com/trade/BP_USDT?type=spot', logo: '/biw.png', size: 'h-6 w-6' },
+                    { name: 'KuCoin', href: 'https://www.kucoin.com/trade/alpha/solana/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump', logo: '/ju.png', size: 'h-5 w-5' },
+                    { name: 'LBank', href: 'https://www.lbank.com/trade/bp_usdt', logo: '/lb.png', size: 'h-7 w-7' },
+                    { name: 'MEXC', href: 'https://www.mexc.com/en-GB/exchange/BP_USDT', logo: '/mexc.png', size: 'h-6 w-6' },
+                    { name: 'BitMart', href: 'https://www.bitmart.com/trade/BP_USDT?type=spot', logo: '/biw.png', size: 'h-6 w-6' },
+                    { name: 'KuCoin', href: 'https://www.kucoin.com/trade/alpha/solana/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump', logo: '/ju.png', size: 'h-5 w-5' },
+                  ].map((item, idx) => (
+                    <a
+                      key={`${item.name}-${idx}`}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-black/70 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
+                    >
+                      <img src={item.logo} alt={item.name} className={`${item.size} object-contain`} />
+                      {item.name}
+                      <ExternalLink size={14} className="opacity-70" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
