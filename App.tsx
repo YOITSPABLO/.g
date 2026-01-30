@@ -291,7 +291,7 @@ const App: React.FC = () => {
                 href="https://dexscreener.com/solana/gywaqp8lb3vqg7q2c58zguevyff8hyogg8besa1fncpz"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full sm:w-auto bg-white/10 text-white px-6 md:px-8 py-4 md:py-5 rounded-full text-base md:text-lg font-semibold hover:bg-white/20 transition-all flex items-center justify-center gap-3 border border-white/20 btn-press glow-border"
+                className="w-full sm:w-auto bg-white/10 text-white px-6 md:px-8 py-4 md:py-5 rounded-full text-base md:text-lg font-semibold hover:bg-white/20 transition-all flex items-center justify-center gap-3 border border-white/20 btn-press glow-white"
               >
                 DexScreener Chart <ExternalLink size={18} />
               </a>
@@ -299,34 +299,28 @@ const App: React.FC = () => {
                 href="https://jup.ag/tokens/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full sm:w-auto bg-white/10 text-white px-6 md:px-8 py-4 md:py-5 rounded-full text-base md:text-lg font-semibold hover:bg-white/20 transition-all flex items-center justify-center gap-3 border border-white/20 btn-press glow-border"
+                className="w-full sm:w-auto bg-white/10 text-white px-6 md:px-8 py-4 md:py-5 rounded-full text-base md:text-lg font-semibold hover:bg-white/20 transition-all flex items-center justify-center gap-3 border border-white/20 btn-press glow-white"
               >
                 Trade on Jupiter <ExternalLink size={18} />
               </a>
               <button
                 type="button"
-                onClick={() => navigator.clipboard?.writeText('3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump')}
-                className="w-full sm:w-auto text-left text-red-500 font-mono text-xs sm:text-sm md:text-base break-all hover:text-red-400 transition-colors"
+                onClick={() => {
+                  navigator.clipboard?.writeText('3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump');
+                  showCopied('CA copied');
+                }}
+                className="w-full sm:w-auto text-left text-red-500 font-mono text-xs sm:text-sm md:text-base break-all hover:text-red-400 transition-colors mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-4 py-2"
               >
-                CA: 3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump
+                <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">CA</span>
+                <span>3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump</span>
               </button>
             </div>
 
-            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 w-full max-w-4xl fade-up delay-4">
-              {[
-                { title: 'Diamond Paws', text: 'Hodl, Bark break the internet.' },
-                { title: 'Stonks Mode', text: 'I LIKE THE COIN.' },
-                { title: 'BARK BARK', text: 'We bark when the bell rings.' },
-              ].map((item) => (
-                <div key={item.title} className="rounded-2xl border border-white/10 bg-black/70 p-4 text-left shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover-lift">
-                  <p className="text-xs uppercase tracking-[0.25em] text-red-500">{item.title}</p>
-                  <p className="mt-2 text-sm text-gray-300">{item.text}</p>
-                </div>
-              ))}
-            </div>
+            {/* WSB cards moved below hero for cleaner layout */}
           </div>
         </div>
       </section>
+
 
       {/* Ticker Strip */}
       <section className="border-y border-white/10 bg-black/90 py-3 overflow-hidden">
