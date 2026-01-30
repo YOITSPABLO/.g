@@ -403,7 +403,29 @@ const App: React.FC = () => {
             </div>
             <div className="mt-8 text-center">
               <p className="text-xs uppercase tracking-[0.4em] text-gray-400">Officially listed on</p>
-              <div className="mt-4 overflow-hidden rounded-full border border-white/10 bg-black/60 px-4 py-3">
+              <div className="mt-4 md:hidden">
+                <div className="flex flex-wrap justify-center gap-3">
+                  {[
+                    { name: 'LBank', href: 'https://www.lbank.com/trade/bp_usdt', logo: '/lb.png', size: 'h-7 w-7' },
+                    { name: 'MEXC', href: 'https://www.mexc.com/en-GB/exchange/BP_USDT', logo: '/mexc.png', size: 'h-6 w-6' },
+                    { name: 'BitMart', href: 'https://www.bitmart.com/trade/BP_USDT?type=spot', logo: '/biw.png', size: 'h-6 w-6' },
+                    { name: 'KuCoin', href: 'https://www.kucoin.com/trade/alpha/solana/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump', logo: '/ju.png', size: 'h-5 w-5' },
+                  ].map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-all"
+                    >
+                      <img src={item.logo} alt={item.name} className={`${item.size} object-contain`} />
+                      {item.name}
+                      <ExternalLink size={12} className="opacity-70" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-4 overflow-hidden rounded-full border border-white/10 bg-black/60 px-4 py-3 hidden md:block">
                 <div className="ticker gap-6">
                   {[
                     { name: 'LBank', href: 'https://www.lbank.com/trade/bp_usdt', logo: '/lb.png', size: 'h-7 w-7' },
