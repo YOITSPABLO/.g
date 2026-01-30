@@ -957,7 +957,7 @@ const App: React.FC = () => {
 
           <div className="text-center md:text-right md:w-1/3 md:justify-end">
             <p className="text-gray-500 text-sm">© 2026 Barking Puppy. Built for the good boys.</p>
-            <p className="text-gray-700 text-[10px] mt-2 max-w-xs">Built by the community, We are not responsible for financial losses, NFA. Memecoin. Do your own research.</p>
+            <p className="text-gray-700 text-[10px] mt-2 max-w-xs mx-auto md:mx-0">Built by the community, We are not responsible for financial losses, NFA. Memecoin. Do your own research.</p>
           </div>
         </div>
       </footer>
