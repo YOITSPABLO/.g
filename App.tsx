@@ -162,10 +162,27 @@ const App: React.FC = () => {
     }
   };
 
-  const shareMemeToX = (src: string) => {
-    const url = encodeURIComponent(`https://barkingpuppy.fun${src}`);
-    const text = encodeURIComponent("The internet isn't ready for $BP");
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'noopener,noreferrer');
+  const shareShillToX = () => {
+    const text = encodeURIComponent(
+      "The internet isn't ready for $BP\n\n3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump"
+    );
+    window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank', 'noopener,noreferrer');
+  };
+
+  const copyMemeImage = async (src: string) => {
+    try {
+      if (!window.isSecureContext || !navigator?.clipboard?.write) {
+        showCopied('Copy not supported');
+        return;
+      }
+      const url = new URL(src, window.location.origin).toString();
+      const res = await fetch(url);
+      const blob = await res.blob();
+      await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+      showCopied('Meme copied');
+    } catch {
+      showCopied('Copy failed');
+    }
   };
 
 
@@ -498,23 +515,80 @@ const App: React.FC = () => {
       {/* Tokenomics */}
       <section
         id="tokenomics"
-        className="relative py-24 px-4 overflow-hidden bg-white/5"
+        className="relative min-h-screen py-24 px-4 overflow-hidden bg-white/5"
       >
+        <div className="pointer-events-none absolute inset-0">
+          <div className="flyer slow" style={{ top: '6%', left: '-30%' }}>
+            <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '12%', left: '-38%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '18%', left: '-26%' }}>
+            <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
+          </div>
+          <div className="flyer fast delay-3" style={{ top: '24%', left: '-34%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-1" style={{ top: '30%', left: '-28%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-2" style={{ top: '36%', left: '-40%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-3" style={{ top: '42%', left: '-32%' }}>
+            <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '48%', left: '-36%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '54%', left: '-28%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-3" style={{ top: '60%', left: '-42%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-1" style={{ top: '66%', left: '-30%' }}>
+            <img src="/download.png" alt="" className="h-9 w-9 object-contain" />
+          </div>
+          <div className="flyer fast delay-2" style={{ top: '72%', left: '-38%' }}>
+            <img src="/download.png" alt="" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flyer slow delay-3" style={{ top: '78%', left: '-34%' }}>
+            <img src="/download.png" alt="" className="h-10 w-10 object-contain" />
+          </div>
+          <div className="flyer fast delay-1" style={{ top: '84%', left: '-40%' }}>
+            <img src="/download.png" alt="" className="h-6 w-6 object-contain" />
+          </div>
+          <div className="flyer slow delay-2" style={{ top: '90%', left: '-36%' }}>
+            <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
+          </div>
+        </div>
         <div className="max-w-7xl mx-auto">
           <div className="relative text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark">Puppynomics</h2>
-            <a
-              href="https://pump.fun/coin/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xl text-white hover:text-red-500 transition-colors"
-            >
-              Launched on <span className="text-red-600 pulse-glow">pump.fun</span>
-            </a>
+            <div className="mt-6 flex flex-col md:flex-row items-center justify-center gap-6">
+              <a
+                href="https://pump.fun/coin/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xl text-white hover:text-red-500 transition-colors"
+              >
+                Launched on <span className="text-red-600 pulse-glow">pump.fun</span>
+              </a>
+              <button
+                type="button"
+                onClick={shareShillToX}
+                className="group relative overflow-hidden rounded-full border border-red-600/60 bg-black/70 px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-red-500 transition-all hover:border-red-500 hover:text-black"
+              >
+                <span className="absolute inset-0 bg-red-600 translate-y-full transition-transform duration-200 group-hover:translate-y-0"></span>
+                <span className="relative">Shill on X</span>
+              </button>
+            </div>
           </div>
 
-          <div className="max-w-3xl mx-auto">
-            <div className="space-y-6">
+          <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr] items-stretch">
+            <div className="flex flex-col gap-6 h-full">
               {TOKENOMICS.map((item, idx) => (
                 <div key={idx} className="relative flex items-center justify-between p-6 bg-black/70 rounded-2xl border border-white/20 hover:border-red-600/60 transition-all hover-lift overflow-hidden backdrop-blur-sm">
                   {idx === 0 && (
@@ -551,7 +625,7 @@ const App: React.FC = () => {
                   </span>
                 </div>
               ))}
-              <div className="relative z-10 p-8 bg-white text-black rounded-3xl mt-8 border border-black/20 shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_36px_rgba(255,255,255,0.22)] ring-2 ring-white/60">
+              <div className="relative z-10 p-8 bg-white text-black rounded-3xl mt-2 border border-black/20 shadow-[0_30px_80px_rgba(0,0,0,0.9),0_0_36px_rgba(255,255,255,0.22)] ring-2 ring-white/60">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
                   <div>
                     <p className="uppercase font-bold text-xs mb-1 opacity-70">Total Supply</p>
@@ -574,6 +648,36 @@ const App: React.FC = () => {
                   </a>
                 </div>
               </div>
+            </div>
+            <div className="relative h-full">
+              <div className="rounded-3xl border border-white/10 bg-black/70 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Puppynomics Snapshot</p>
+                <h3 className="mt-4 text-2xl font-bold">Burns, buybacks, and pack power.</h3>
+                <p className="mt-3 text-sm text-gray-400">Momentum is driven by dev buybacks and community conviction.</p>
+                <div className="mt-6 grid gap-4">
+                  {[
+                    { label: 'Liquidity', value: 'Burned' },
+                    { label: 'Marketing', value: '1% fee' },
+                    { label: 'Chain', value: 'Solana' },
+                  ].map((stat) => (
+                    <div key={stat.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/60 px-4 py-3">
+                      <span className="text-sm text-gray-400">{stat.label}</span>
+                      <span className="text-sm font-semibold text-white">{stat.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-red-600/20 flex items-center justify-center text-red-500">
+                    <Flame size={20} />
+                  </div>
+                  <p className="text-sm text-gray-400">Pack is burning supply every cycle.</p>
+                </div>
+              </div>
+              <img
+                src="/mask.png"
+                alt="Puppy"
+                className="pointer-events-none absolute -top-10 -right-6 w-32 rotate-6 opacity-100"
+              />
             </div>
           </div>
         </div>
@@ -630,7 +734,9 @@ const App: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark mb-4">The Puppy Pack</h2>
+            <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark mb-4">
+              The <span className="text-red-600">Puppy</span> Pack
+            </h2>
             <p className="text-xl text-gray-400">There will be signs.</p>
           </div>
 
@@ -709,10 +815,10 @@ const App: React.FC = () => {
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                     <button
                       type="button"
-                      onClick={() => shareMemeToX(item.src)}
+                      onClick={() => copyMemeImage(item.src)}
                       className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-colors"
                     >
-                      Share X
+                      Copy
                     </button>
                   </div>
                 </div>
@@ -735,10 +841,10 @@ const App: React.FC = () => {
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                     <button
                       type="button"
-                      onClick={() => shareMemeToX(item.src)}
+                      onClick={() => copyMemeImage(item.src)}
                       className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-colors"
                     >
-                      Share X
+                      Copy
                     </button>
                   </div>
                 </div>
