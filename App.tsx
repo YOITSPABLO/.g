@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dog,
   MessageCircle,
@@ -19,6 +19,21 @@ const TOKENOMICS: TokenomicItem[] = [
   { name: 'Liquidity Pool (Burned)', value: 100, color: '#111111' },
   { name: 'Marketing Wallet', value: 1, color: '#e60012' },
 ];
+
+const memeImports = import.meta.glob('/src/memes/*.{png,jpg,jpeg,webp}', { eager: true, import: 'default' });
+const meme2Imports = import.meta.glob('/src/memes2/*.{png,jpg,jpeg,webp}', { eager: true, import: 'default' });
+
+const toMemeList = (mods: Record<string, unknown>) =>
+  Object.entries(mods)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, url]) => {
+      const name = key.split('/').pop() || 'Meme';
+      return { src: url as string, alt: name.replace(/\.[^.]+$/, '') };
+    });
+
+const MEMES = toMemeList(memeImports);
+
+const MEMES_2 = toMemeList(meme2Imports);
 
 const ROADMAP: RoadmapStep[] = [
   {
@@ -89,6 +104,7 @@ const App: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 });
   const [hoverImage, setHoverImage] = useState<{ src: string; alt: string } | null>(null);
+  const [copiedMessage, setCopiedMessage] = useState<string | null>(null);
   const CONTRACT_ADDRESS = '3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump';
   const TIP_WALLET = 'FY3vRfUKVecZ2XpJei5vAZ4nFMoiqzKU6gcTna6g2EWs';
 
@@ -123,19 +139,43 @@ const App: React.FC = () => {
     setHoverImage(null);
   };
 
+  useEffect(() => {
+    if (!copiedMessage) return;
+    const t = setTimeout(() => setCopiedMessage(null), 1600);
+    return () => clearTimeout(t);
+  }, [copiedMessage]);
+
+  const showCopied = (label: string) => {
+    setCopiedMessage(label);
+  };
+
   const copyContractAddress = () => {
     if (navigator?.clipboard?.writeText) {
       navigator.clipboard.writeText(CONTRACT_ADDRESS);
+      showCopied('CA copied');
     }
   };
   const copyTipWallet = () => {
     if (navigator?.clipboard?.writeText) {
       navigator.clipboard.writeText(TIP_WALLET);
+      showCopied('Tip wallet copied');
     }
   };
 
+  const shareMemeToX = (src: string) => {
+    const url = encodeURIComponent(`https://barkingpuppy.fun${src}`);
+    const text = encodeURIComponent("The internet isn't ready for $BP");
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'noopener,noreferrer');
+  };
+
+
   return (
     <div className="min-h-screen bg-black text-white">
+      {copiedMessage && (
+        <div className="fixed bottom-6 left-1/2 z-[70] -translate-x-1/2 rounded-full border border-white/10 bg-black/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+          {copiedMessage}
+        </div>
+      )}
       {hoverImage && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-6"
@@ -289,7 +329,7 @@ const App: React.FC = () => {
       </section>
 
       {/* About */}
-      <section id="about" className="relative py-24 border-y border-white/10 bg-white/5 overflow-hidden">
+      <section id="about" className="relative py-24 bg-white/5 overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           <div className="flyer slow" style={{ top: '6%', left: '-28%' }}>
             <img src="/download.png" alt="" className="h-8 w-8 object-contain" />
@@ -458,10 +498,8 @@ const App: React.FC = () => {
       {/* Tokenomics */}
       <section
         id="tokenomics"
-        className="relative py-24 px-4 overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: "url('/gil.jpeg')" }}
+        className="relative py-24 px-4 overflow-hidden bg-white/5"
       >
-        <div className="absolute inset-0 bg-black/85"></div>
         <div className="max-w-7xl mx-auto">
           <div className="relative text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark">Puppynomics</h2>
@@ -644,8 +682,91 @@ const App: React.FC = () => {
         </div>
       </section>
 
+      {/* Memes */}
+      <section id="memes" className="relative py-24 bg-white/5 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-4">
+          <div className="text-center mb-14">
+            <p className="text-xs uppercase tracking-[0.4em] text-gray-500">MOAR MEMES !!!</p>
+            <h2 className="text-4xl md:text-6xl font-bold uppercase wordmark mt-3">
+              THE PACKS <span className="text-red-600">MEMES</span>
+            </h2>
+            <p className="mt-4 text-gray-400">Post a meme on X, tag $BP for a chance to feature your meme.</p>
+          </div>
+
+          <div className="overflow-hidden rounded-[32px] border border-white/10 bg-black/60 px-4 py-6">
+            <div className="ticker gap-6" style={{ animationDuration: '28s' }}>
+              {[...MEMES, ...MEMES].map((item, idx) => (
+                <div
+                  key={`${item.alt}-${idx}`}
+                  className="group relative h-48 w-64 overflow-hidden rounded-3xl border border-white/10 bg-black/70 shadow-[0_18px_50px_rgba(0,0,0,0.45)] hover-lift"
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70"></div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <button
+                      type="button"
+                      onClick={() => shareMemeToX(item.src)}
+                      className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-colors"
+                    >
+                      Share X
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 overflow-hidden rounded-[32px] border border-white/10 bg-black/60 px-4 py-6">
+            <div className="ticker gap-6" style={{ animationDuration: '28s', animationDirection: 'reverse' }}>
+              {[...MEMES_2, ...MEMES_2].map((item, idx) => (
+                <div
+                  key={`rev-${item.alt}-${idx}`}
+                  className="group relative h-48 w-64 overflow-hidden rounded-3xl border border-white/10 bg-black/70 shadow-[0_18px_50px_rgba(0,0,0,0.45)] hover-lift"
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70"></div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-start gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    <button
+                      type="button"
+                      onClick={() => shareMemeToX(item.src)}
+                      className="rounded-full border border-white/20 bg-black/70 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/80 hover:text-white hover:border-red-600/60 transition-colors"
+                    >
+                      Share X
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            {['CULTURE', 'CLUES', 'CONVICTION', 'BARK ENERGY'].map((tag) => (
+              <span
+                key={tag}
+                className={`rounded-full border border-white/10 bg-black/60 px-4 py-2 text-[10px] uppercase tracking-[0.3em] ${
+                  tag === 'CONVICTION' ? 'text-red-500' : 'text-gray-400'
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1">
+          <svg viewBox="0 0 1440 80" className="w-full h-12 md:h-16" preserveAspectRatio="none">
+            <path d="M0,32 C240,80 480,80 720,40 C960,0 1200,0 1440,32 L1440,80 L0,80 Z" fill="white" />
+          </svg>
+        </div>
+      </section>
       {/* How To Buy */}
-      <section id="howtobuy" className="py-24 bg-white text-black">
+      <section id="howtobuy" className="relative py-24 bg-white text-black">
         <div className="relative max-w-7xl mx-auto px-4">
           <h2 className="text-4xl md:text-6xl font-bold uppercase text-center mb-16 wordmark">How to Adopt $BP</h2>
           <div className="grid md:grid-cols-3 gap-12">
