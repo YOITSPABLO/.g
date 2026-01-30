@@ -949,7 +949,8 @@ const App: React.FC = () => {
                 onClick={copyTipWallet}
                 className="mt-2 text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors underline underline-offset-4"
               >
-                If you like the site, leave a tip
+                If you like the site, leave a <span className="text-red-500">tip</span>
+                <span className="relative inline-block ml-1 -top-1 text-red-500">♥</span>
               </button>
               <p className="mt-2 font-mono text-xs text-gray-500 break-all">{TIP_WALLET}</p>
             </div>
