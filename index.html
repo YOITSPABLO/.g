@@ -152,6 +152,15 @@
         .glow-white:hover {
             box-shadow: 0 0 24px rgba(255, 255, 255, 0.35);
         }
+        .hero-bg {
+            background-position: center top;
+        }
+        @media (max-width: 640px) {
+            .hero-bg {
+                background-position: center 20%;
+                background-size: cover;
+            }
+        }
         @keyframes flyAcross {
             0% { transform: translateX(-20%) translateY(0) rotate(-6deg); opacity: 0; }
             10% { opacity: 0.8; }

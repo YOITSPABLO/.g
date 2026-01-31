@@ -253,10 +253,10 @@ const App: React.FC = () => {
 
       {/* Hero */}
       <section
-        className="relative pt-32 pb-20 px-4 overflow-hidden bg-cover bg-center"
+        className="hero-bg relative pt-32 pb-20 px-4 overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url('/her.png')" }}
       >
-        <div className="absolute inset-0 bg-black/92 sm:bg-black/80 md:bg-black/70"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
         <div className="relative mx-auto max-w-6xl">
           <div className="flex flex-col items-center text-center">
             <div className="floating mb-8 relative fade-up group">
@@ -313,10 +313,10 @@ const App: React.FC = () => {
                   navigator.clipboard?.writeText('3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump');
                   showCopied('CA copied');
                 }}
-                className="w-full sm:w-auto text-left text-red-500 font-mono text-xs sm:text-sm md:text-base break-all hover:text-red-400 transition-colors mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-4 py-2"
+                className="w-full sm:w-auto text-left text-red-500 font-mono text-xs sm:text-sm md:text-base hover:text-red-400 transition-colors mt-3 inline-flex flex-col sm:flex-row sm:items-center gap-2 rounded-2xl border border-white/10 bg-black/50 px-4 py-2"
               >
                 <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">CA</span>
-                <span>3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump</span>
+                <span className="break-all">3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump</span>
               </button>
             </div>
 
