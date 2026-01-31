@@ -228,7 +228,7 @@ const App: React.FC = () => {
             <a href="#tokenomics" className="transition-colors hover:text-red-600">Tokenomics</a>
             <a href="#roadmap" className="transition-colors hover:text-red-600">Roadmap</a>
             <a href="#howtobuy" className="transition-colors hover:text-red-600">How to Buy</a>
-            <a href="https://x.com/i/communities/2015764395733708955" target="_blank" rel="noreferrer" className="rounded-full bg-red-600 px-6 py-2 text-black transition hover:bg-red-500">
+            <a href="https://x.com/i/communities/2017378247273492968" target="_blank" rel="noreferrer" className="rounded-full bg-red-600 px-6 py-2 text-black transition hover:bg-red-500">
               <span className="flex items-center gap-2">Join X</span>
             </a>
           </div>
@@ -246,7 +246,7 @@ const App: React.FC = () => {
             <a href="#tokenomics" className="block px-3 py-2 text-lg" onClick={() => setIsMenuOpen(false)}>Tokenomics</a>
             <a href="#roadmap" className="block px-3 py-2 text-lg" onClick={() => setIsMenuOpen(false)}>Roadmap</a>
             <a href="#howtobuy" className="block px-3 py-2 text-lg" onClick={() => setIsMenuOpen(false)}>How to Buy</a>
-            <a href="https://x.com/i/communities/2015764395733708955" className="block rounded-full bg-red-600 px-4 py-3 text-center font-semibold text-black">Join X</a>
+            <a href="https://x.com/i/communities/2017378247273492968" className="block rounded-full bg-red-600 px-4 py-3 text-center font-semibold text-black">Join X</a>
           </div>
         )}
       </nav>
@@ -935,7 +935,7 @@ const App: React.FC = () => {
             <a href="https://x.com/BPuppy80020" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
               <Twitter size={32} />
             </a>
-            <a href="https://x.com/i/communities/2015764395733708955" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://x.com/i/communities/2017378247273492968" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
               <MessageCircle size={32} />
             </a>
             <a href="https://pump.fun/coin/3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors">
